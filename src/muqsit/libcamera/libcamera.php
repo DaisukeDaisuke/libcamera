@@ -39,12 +39,12 @@ final class libcamera{
 			"target" => new CameraPreset("minecraft:target", "minecraft:free", null, null, null, null, null, 0.0, true, new Vector2(0.0, 360.0), new Vector2(0.0, 180.0), true, 50.0, null, null, null, null, null, CameraPreset::AUDIO_LISTENER_TYPE_CAMERA, false, null, null)
 		]);
 		$packet = CameraPresetsPacket::create(array_values($preset_registry->registered));
-		Server::getInstance()->getPluginManager()->registerEvent(DataPacketReceiveEvent::class, function(DataPacketReceiveEvent $event) use ($packet) : void{
+		Server::getInstance()->getPluginManager()->registerEvent(DataPacketReceiveEvent::class, function(DataPacketReceiveEvent $event) use($packet) : void{
 			if($event->getPacket() instanceof SetLocalPlayerAsInitializedPacket){
 				$event->getOrigin()->sendDataPacket($packet);
 			}
 		}, EventPriority::MONITOR, $plugin);
-		Server::getInstance()->getPluginManager()->registerEvent(DataPacketSendEvent::class, function(DataPacketSendEvent $event) use($packet) : void{
+		Server::getInstance()->getPluginManager()->registerEvent(DataPacketSendEvent::class, function(DataPacketSendEvent $event) use ($packet) : void{
 			foreach($event->getPackets() as $packet){
 				if($packet instanceof StartGamePacket){
 					$experiments = $packet->levelSettings->experiments->getExperiments();

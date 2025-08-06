@@ -25,22 +25,21 @@ final class libcamera{
 	private static bool $registered = false;
 	private static CameraPresetRegistry $preset_registry;
 
-	public static function isRegistered(): bool{
+	public static function isRegistered() : bool{
 		return self::$registered;
 	}
 
 	public static function register(Plugin $plugin) : void{
 		!self::$registered || throw new BadMethodCallException("Tried to registered an already existing libcamera instance");
 		$preset_registry = new CameraPresetRegistry([
-			"free" => new CameraPreset("minecraft:free", "", null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, CameraPreset::AUDIO_LISTENER_TYPE_CAMERA, false, null, null),
-			"first_person" => new CameraPreset("minecraft:first_person", "", null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, CameraPreset::AUDIO_LISTENER_TYPE_PLAYER, false, null, null),
-			"third_person" => new CameraPreset("minecraft:third_person", "", null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, CameraPreset::AUDIO_LISTENER_TYPE_PLAYER, false, null, null),
-			"third_person_front" => new CameraPreset("minecraft:third_person_front", "", null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, CameraPreset::AUDIO_LISTENER_TYPE_PLAYER, false, null, null),
-			"target" => new CameraPreset("minecraft:target", "minecraft:free", null, null, null, null, null, 0.0, true, new Vector2(0.0, 360.0), new Vector2(0.0, 180.0), true, 50.0, null, null, null, null, null, null, CameraPreset::AUDIO_LISTENER_TYPE_CAMERA, false, null, null)
+			"free" => new CameraPreset("minecraft:free", "", null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, CameraPreset::AUDIO_LISTENER_TYPE_CAMERA, false, null, null),
+			"first_person" => new CameraPreset("minecraft:first_person", "", null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, CameraPreset::AUDIO_LISTENER_TYPE_PLAYER, false, null, null),
+			"third_person" => new CameraPreset("minecraft:third_person", "", null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, CameraPreset::AUDIO_LISTENER_TYPE_PLAYER, false, null, null),
+			"third_person_front" => new CameraPreset("minecraft:third_person_front", "", null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, CameraPreset::AUDIO_LISTENER_TYPE_PLAYER, false, null, null),
+			"target" => new CameraPreset("minecraft:target", "minecraft:free", null, null, null, null, null, 0.0, true, new Vector2(0.0, 360.0), new Vector2(0.0, 180.0), true, 50.0, null, null, null, null, null, CameraPreset::AUDIO_LISTENER_TYPE_CAMERA, false, null, null)
 		]);
-
 		$packet = CameraPresetsPacket::create(array_values($preset_registry->registered));
-		Server::getInstance()->getPluginManager()->registerEvent(DataPacketReceiveEvent::class, function(DataPacketReceiveEvent $event) use($packet) : void{
+		Server::getInstance()->getPluginManager()->registerEvent(DataPacketReceiveEvent::class, function(DataPacketReceiveEvent $event) use ($packet) : void{
 			if($event->getPacket() instanceof SetLocalPlayerAsInitializedPacket){
 				$event->getOrigin()->sendDataPacket($packet);
 			}
@@ -63,7 +62,7 @@ final class libcamera{
 	}
 
 	public static function parseEaseType(string $type) : int{
-		return match($type){
+		return match ($type) {
 			"linear" => CameraSetInstructionEaseType::LINEAR,
 			"spring" => CameraSetInstructionEaseType::SPRING,
 			"in_quad" => CameraSetInstructionEaseType::IN_QUAD,

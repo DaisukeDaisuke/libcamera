@@ -74,7 +74,7 @@ if($player instanceof Player && $player->isOnline()){
 			CameraSetInstructionEaseType::IN_OUT_CUBIC,
 			(float) 5.0 // duration (sec)
 		),
-		camera_pos: null, //Without it, the camera will teleport into subspace
+		camera_pos: null,
 		rot: new CameraSetInstructionRotation(
 			(float)20.0, //pitch
 			(float)180.0 //yaw

@@ -25,7 +25,7 @@ final class libcamera{
 	private static bool $registered = false;
 	private static CameraPresetRegistry $preset_registry;
 
-	public static function isRegistered() : bool{
+	public static function isRegistered(): bool{
 		return self::$registered;
 	}
 

@@ -44,7 +44,7 @@ final class libcamera{
 				$event->getOrigin()->sendDataPacket($packet);
 			}
 		}, EventPriority::MONITOR, $plugin);
-		Server::getInstance()->getPluginManager()->registerEvent(DataPacketSendEvent::class, function(DataPacketSendEvent $event) use ($packet) : void{
+		Server::getInstance()->getPluginManager()->registerEvent(DataPacketSendEvent::class, function(DataPacketSendEvent $event) use($packet) : void{
 			foreach($event->getPackets() as $packet){
 				if($packet instanceof StartGamePacket){
 					$experiments = $packet->levelSettings->experiments->getExperiments();
@@ -62,7 +62,7 @@ final class libcamera{
 	}
 
 	public static function parseEaseType(string $type) : int{
-		return match ($type) {
+		return match($type){
 			"linear" => CameraSetInstructionEaseType::LINEAR,
 			"spring" => CameraSetInstructionEaseType::SPRING,
 			"in_quad" => CameraSetInstructionEaseType::IN_QUAD,
